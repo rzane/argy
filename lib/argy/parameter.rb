@@ -2,12 +2,11 @@ require "argy/parameter"
 
 module Argy
   class Parameter
-    attr_reader :name, :type, :aliases, :default
+    attr_reader :name, :type, :default, :desc
 
-    def initialize(name, aliases: [], desc: nil, type: :string, default: nil, required: false)
+    def initialize(name, desc: nil, type: :string, default: nil, required: false)
       @name = name
       @type = type
-      @aliases = aliases
       @desc = desc
       @default = default
       @required = required
@@ -19,16 +18,6 @@ module Argy
 
     def required?
       @required
-    end
-
-    def desc
-      if @desc && required?
-        "#{@desc} (required)"
-      elsif required?
-        "(required)"
-      else
-        @desc
-      end
     end
 
     def validate(value)

@@ -2,8 +2,20 @@ require "argy/parameter"
 
 module Argy
   class Option < Parameter
+    attr_reader :aliases
+
+    def initialize(*args, aliases: [], **opts)
+      super(*args, **opts)
+      @aliases = aliases
+    end
+
     def label
-      "--#{name.to_s.tr("_", "-")}"
+      case type
+      when :boolean
+        "--[no-]#{name.to_s.tr("_", "-")}"
+      else
+        "--#{name.to_s.tr("_", "-")}"
+      end
     end
 
     def to_option_parser
@@ -12,7 +24,7 @@ module Argy
 
       case type
       when :boolean
-        options << label.sub(/^--/, "--[no-]")
+        options << label
       else
         options << "#{label}=#{name.to_s.upcase}"
         options << "#{label} #{name.to_s.upcase}"

@@ -9,8 +9,8 @@ options = Argy.parse(ARGV) do |o|
   o.example "$ example foo"
   o.argument :jint, desc: "do a thing"
   o.option :fizz, required: true, desc: "blah"
-  o.option :foo_bar, aliases: ["-f"]
-  o.on "-v" do
+  o.option :foo_bar, aliases: ["-f"], default: "jawn"
+  o.on "-v", "print the verison and exit" do
     puts Argy::VERSION
   end
 end

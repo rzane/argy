@@ -1,4 +1,5 @@
 require "optparse"
+require "argy/help"
 require "argy/option"
 require "argy/argument"
 
@@ -38,16 +39,16 @@ module Argy
       @options << Option.new(*args)
     end
 
-    def on(*args, &block)
-      @flags << [args, block]
+    def on(*args, &action)
+      @flags << [args, action]
     end
 
     def parameters
       arguments + options
     end
 
-    def help
-      deindent build_parser({}).to_s
+    def help(**opts)
+      Help.new(self, **opts)
     end
 
     def default_values
@@ -89,48 +90,21 @@ module Argy
     end
 
     def build_parser(values)
-      OptionParser.new description || bold("USAGE") do |o|
-        o.separator bold("\nUSAGE") if description
-        o.separator "  #{usage}"
-
-        o.separator bold("\nEXAMPLES") if examples.any?
-        examples.each do |ex|
-          o.separator "  #{ex}"
-        end
-
-        o.separator bold("\nARGUMENTS") if arguments.any?
-        arguments.each do |arg|
-          o.separator "  #{arg.label}#{arg.desc&.rjust(39)}"
-        end
-
-        o.separator bold("\nOPTIONS") if options.any?
+      OptionParser.new do |o|
         options.each do |opt|
           o.on(*opt.to_option_parser) do |value|
             values[opt.name] = opt.coerce(value)
           end
         end
 
-        o.separator bold("\nFLAGS")
         flags.each do |flag, action|
-          o.on_tail(*flag, &action)
+          o.on(*flag, &action)
         end
 
-        o.on_tail("-h", "--help", "show this help and exit") do
-          puts deindent(o.to_s)
+        o.on("-h", "--help") do
+          puts help
           exit
         end
-      end
-    end
-
-    def deindent(out)
-      out.gsub(/^    /, "  ")
-    end
-
-    def bold(value)
-      if $stdout.tty?
-        "\e[1m#{value}\e[0m"
-      else
-        value
       end
     end
   end

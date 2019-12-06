@@ -97,7 +97,7 @@ RSpec.describe Argy do
     parser.option :foo_bar, aliases: ["-f"]
     parser.on("-v", "show the version and exit") {}
 
-    expect(strip_ansi(parser.help)).to eq(<<~EOS)
+    expect(parser.help(color: false).to_s).to eq(<<~EOS)
       USAGE
         example
 
@@ -105,20 +105,16 @@ RSpec.describe Argy do
         $ example foo
 
       ARGUMENTS
-        JINT                             do a thing
+        JINT                          do a thing
 
       OPTIONS
-            --fizz FIZZ                  blah (required)
-        -f, --foo-bar FOO_BAR
+        --fizz=VALUE                  blah (required)
+        --foo-bar=VALUE, -f VALUE
 
       FLAGS
-        -v                               show the version and exit
-        -h, --help                       show this help and exit
+        -v                            show the version and exit
+        --help, -h                    show this help and exit
     EOS
-  end
-
-  def strip_ansi(out)
-    out.gsub(/\e\[\d+m/, "")
   end
 
   def have_values(**values)
