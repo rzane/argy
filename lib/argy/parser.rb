@@ -63,7 +63,7 @@ module Argy
       values = default_values
 
       parser = build_parser(values)
-      parser.order!(argv)
+      parser.parse!(argv)
 
       populate_arguments(values, argv)
       validate!(values)

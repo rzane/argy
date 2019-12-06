@@ -75,9 +75,10 @@ RSpec.describe Argy do
   end
 
   it "keeps unused arguments" do
-    parser.argument :foo
-    options = parser.parse %w(foo bar -f buzz)
-    expect(options).to eq(foo: "foo", unused_arguments: ["bar", "-f", "buzz"])
+    parser.option :output
+    parser.argument :name
+    options = parser.parse %w(foo --output src unused)
+    expect(options).to eq(name: "foo", output: "src", unused_arguments: ["unused"])
   end
 
   it "raises a custom error when coersion fails" do
