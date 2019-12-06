@@ -5,6 +5,7 @@ require "argy"
 
 options = Argy.parse(ARGV) do |o|
   o.usage "example"
+  o.description "A cool thing that does stuff"
   o.example "$ example foo"
   o.version "0.0.0"
   o.argument :jint, desc: "do a thing"

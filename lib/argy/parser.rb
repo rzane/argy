@@ -90,13 +90,9 @@ module Argy
     end
 
     def build_parser(values)
-      OptionParser.new bold("USAGE") do |o|
+      OptionParser.new description || bold("USAGE") do |o|
+        o.separator bold("\nUSAGE") if description
         o.separator "  #{usage}"
-
-        if description
-          o.separator bold("\nDESCRIPTION")
-          o.separator "  #{description}"
-        end
 
         o.separator bold("\nEXAMPLES") if examples.any?
         examples.each do |ex|
