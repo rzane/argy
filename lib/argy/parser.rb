@@ -69,6 +69,8 @@ module Argy
       validate!(values)
 
       values
+    rescue OptionParser::MissingArgument => error
+      raise MissingArgumentError, error.message
     end
 
     private

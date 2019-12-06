@@ -5,6 +5,7 @@ module Argy
   Error = Class.new(StandardError)
   CoersionError = Class.new(Error)
   ValidationError = Class.new(Error)
+  MissingArgumentError = Class.new(Error)
 
   def self.new(&block)
     Argy::Parser.new(&block)
