@@ -104,7 +104,7 @@ module Argy
           o.separator "  #{arg.label}#{arg.desc&.rjust(39)}"
         end
 
-        o.separator bold("\nOPTIONS") if arguments.any?
+        o.separator bold("\nOPTIONS") if options.any?
         options.each do |opt|
           o.on(*opt.to_option_parser) do |value|
             values[opt.name] = opt.coerce(value)
