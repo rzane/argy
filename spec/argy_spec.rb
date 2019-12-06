@@ -89,7 +89,6 @@ RSpec.describe Argy do
   end
 
   it "generates help" do
-    skip
     parser.usage "example"
     parser.example "$ example foo"
     parser.version "0.0.0"
@@ -97,22 +96,28 @@ RSpec.describe Argy do
     parser.option :fizz, required: true, desc: "blah"
     parser.option :foo_bar, aliases: ["-f"]
 
-    expect(parser.help).to eq(<<~EOS)
-      Usage:
-          example
+    expect(strip_ansi(parser.help)).to eq(<<~EOS)
+      USAGE
+        example
 
-      Examples:
-          $ example foo
+      EXAMPLES
+        $ example foo
 
-      Arguments:
-          JINT                             do a thing
+      ARGUMENTS
+        JINT                             do a thing
 
-      Options:
-              --fizz FIZZ                  blah
-          -f, --foo-bar FOO_BAR
-          -v, --version                    show version and exit
-          -h, --help                       show this help and exit
+      OPTIONS
+            --fizz FIZZ                  blah (required)
+        -f, --foo-bar FOO_BAR
+
+      FLAGS
+        -v, --version                    show version and exit
+        -h, --help                       show this help and exit
     EOS
+  end
+
+  def strip_ansi(out)
+    out.gsub(/\e\[\d+m/, "")
   end
 
   def have_values(**values)

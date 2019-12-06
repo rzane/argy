@@ -1,0 +1,15 @@
+#!/usr/bin/env ruby
+
+require "bundler/setup"
+require "argy"
+
+options = Argy.parse(ARGV) do |o|
+  o.usage "example"
+  o.example "$ example foo"
+  o.version "0.0.0"
+  o.argument :jint, desc: "do a thing"
+  o.option :fizz, required: true, desc: "blah"
+  o.option :foo_bar, aliases: ["-f"]
+end
+
+puts options

@@ -11,6 +11,6 @@ module Argy
   end
 
   def self.parse(argv, &block)
-    build(&block).parse(argv)
+    new(&block).parse(argv)
   end
 end
