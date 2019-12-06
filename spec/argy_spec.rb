@@ -92,10 +92,10 @@ RSpec.describe Argy do
   it "generates help" do
     parser.usage "example"
     parser.example "$ example foo"
-    parser.version "0.0.0"
     parser.argument :jint, desc: "do a thing"
     parser.option :fizz, required: true, desc: "blah"
     parser.option :foo_bar, aliases: ["-f"]
+    parser.on("-v", "show the version and exit") {}
 
     expect(strip_ansi(parser.help)).to eq(<<~EOS)
       USAGE
@@ -112,7 +112,7 @@ RSpec.describe Argy do
         -f, --foo-bar FOO_BAR
 
       FLAGS
-        -v, --version                    show version and exit
+        -v                               show the version and exit
         -h, --help                       show this help and exit
     EOS
   end

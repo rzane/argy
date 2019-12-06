@@ -4,14 +4,14 @@ require "argy/argument"
 
 module Argy
   class Parser
-    attr_reader :examples, :arguments, :options
+    attr_reader :examples, :arguments, :options, :flags
 
     def initialize
       @usage = $0
-      @version = nil
       @description = nil
       @arguments = []
       @options = []
+      @flags = []
       @examples = []
       yield self if block_given?
     end
@@ -19,11 +19,6 @@ module Argy
     def usage(usage = nil)
       @usage = usage if usage
       @usage
-    end
-
-    def version(version = nil)
-      @version = version if version
-      @version
     end
 
     def description(description = nil)
@@ -41,6 +36,10 @@ module Argy
 
     def option(*args)
       @options << Option.new(*args)
+    end
+
+    def on(*args, &block)
+      @flags << [args, block]
     end
 
     def parameters
@@ -112,11 +111,8 @@ module Argy
         end
 
         o.separator bold("\nFLAGS")
-        if version
-          o.on_tail("-v", "--version", "show version and exit") do
-            puts version
-            exit
-          end
+        flags.each do |flag, action|
+          o.on_tail(*flag, &action)
         end
 
         o.on_tail("-h", "--help", "show this help and exit") do
