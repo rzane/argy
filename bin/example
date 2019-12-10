@@ -3,16 +3,23 @@
 require "bundler/setup"
 require "argy"
 
-options = Argy.parse(ARGV) do |o|
+parser = Argy.new do |o|
+  o.description "Prints messages"
   o.usage "example"
-  o.description "A cool thing that does stuff"
-  o.example "$ example foo"
-  o.argument :jint, desc: "do a thing"
-  o.option :fizz, required: true, desc: "blah"
-  o.option :foo_bar, aliases: ["-f"], default: "jawn"
+  o.example "$ example hello"
+  o.argument :message, desc: "message to print", required: true
+  o.option :loud, type: :boolean, desc: "say the message loudly"
+  o.option :times, type: :integer, desc: "number of times to print", default: 1
   o.on "-v", "print the verison and exit" do
     puts Argy::VERSION
   end
 end
 
-puts options
+begin
+  options = parser.parse(ARGV)
+  message = options.message
+  message = message.upcase if options.loud?
+  options.times.times { puts message }
+rescue Argy::Error => err
+  abort err.message
+end
