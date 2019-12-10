@@ -5,28 +5,28 @@ RSpec.describe Argy do
 
   it "parses an option" do
     parser.option :value
-    expect(parser.parse(["--value", "foo"])).to have_values(value: "foo")
+    expect(parser.parse(["--value", "foo"]).to_h).to have_values(value: "foo")
   end
 
   it "parses a boolean option" do
     parser.option :value, type: :boolean
-    expect(parser.parse(["--value"])).to have_values(value: true)
-    expect(parser.parse(["--no-value"])).to have_values(value: false)
+    expect(parser.parse(["--value"]).to_h).to have_values(value: true)
+    expect(parser.parse(["--no-value"]).to_h).to have_values(value: false)
   end
 
   it "parses an integer option" do
     parser.option :value, type: :integer
-    expect(parser.parse(["--value", "1"])).to have_values(value: 1)
+    expect(parser.parse(["--value", "1"]).to_h).to have_values(value: 1)
   end
 
   it "parses a float option" do
     parser.option :value, type: :float
-    expect(parser.parse(["--value", "1.1"])).to have_values(value: 1.1)
+    expect(parser.parse(["--value", "1.1"]).to_h).to have_values(value: 1.1)
   end
 
   it "parses an array option" do
     parser.option :value, type: :array
-    expect(parser.parse(["--value", "one,two"])).to have_values(value: ["one", "two"])
+    expect(parser.parse(["--value", "one,two"]).to_h).to have_values(value: ["one", "two"])
   end
 
   it "parses a pathname" do
@@ -39,23 +39,23 @@ RSpec.describe Argy do
 
   it "parses a custom option" do
     parser.option :value, type: ->(value) { "custom #{value}" }
-    expect(parser.parse(["--value", "foo"])).to have_values(value: "custom foo")
+    expect(parser.parse(["--value", "foo"]).to_h).to have_values(value: "custom foo")
   end
 
   it "parses a positional arguments" do
     parser.argument :foo
     parser.argument :bar
-    expect(parser.parse(["foo"])).to have_values(foo: "foo", bar: nil)
+    expect(parser.parse(["foo"]).to_h).to have_values(foo: "foo", bar: nil)
   end
 
   it "respects aliases" do
     parser.option :value, aliases: ["-v"]
-    expect(parser.parse(["-v", "foo"])).to have_values(value: "foo")
+    expect(parser.parse(["-v", "foo"]).to_h).to have_values(value: "foo")
   end
 
   it "respects default values" do
     parser.option :value, default: "foo"
-    expect(parser.parse([])).to have_values(value: "foo")
+    expect(parser.parse([]).to_h).to have_values(value: "foo")
   end
 
   it "respects missing arguments" do
@@ -78,7 +78,7 @@ RSpec.describe Argy do
     parser.option :output
     parser.argument :name
     options = parser.parse %w(foo --output src unused)
-    expect(options).to eq(name: "foo", output: "src", unused_arguments: ["unused"])
+    expect(options.to_h).to eq(name: "foo", output: "src", unused_arguments: ["unused"])
   end
 
   it "raises a custom error when coersion fails" do

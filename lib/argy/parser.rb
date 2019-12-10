@@ -2,6 +2,7 @@ require "optparse"
 require "argy/help"
 require "argy/option"
 require "argy/argument"
+require "argy/options"
 
 module Argy
   class Parser
@@ -68,7 +69,7 @@ module Argy
       populate_arguments(values, argv)
       validate!(values)
 
-      values
+      Options.new(values)
     rescue OptionParser::MissingArgument => error
       raise MissingArgumentError, error.message
     end
