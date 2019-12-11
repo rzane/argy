@@ -74,6 +74,13 @@ module Argy
       raise MissingArgumentError, error.message
     end
 
+    def validate!(values)
+      parameters.each do |param|
+        param.validate(values[param.name])
+      end
+      nil
+    end
+
     private
 
     def populate_arguments(values, argv)
@@ -83,12 +90,6 @@ module Argy
         else
           values[arg.name] = arg.coerce(value)
         end
-      end
-    end
-
-    def validate!(values)
-      parameters.each do |param|
-        param.validate(values[param.name])
       end
     end
 
