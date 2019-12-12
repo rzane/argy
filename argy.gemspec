@@ -8,8 +8,11 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Ray Zane"]
   spec.email         = ["raymondzane@gmail.com"]
 
-  spec.summary       = %q{A fully featured option parser.}
+  spec.summary       = %q{Yet another command-line option parser.}
   spec.license       = "MIT"
+
+  spec.metadata["source_code_uri"] = "https://github.com/rzane/argy"
+  spec.metadata["documentation_uri"] = "https://rubydoc.info/github/rzane/argy"
 
   # Specify which files should be added to the gem when it is released.
   # The `git ls-files -z` loads the files in the RubyGem that have been added into git.
