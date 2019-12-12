@@ -80,8 +80,8 @@ module Argy
 
       populate_arguments(values, argv)
       Options.new validate!(values)
-    rescue OptionParser::MissingArgument => error
-      raise MissingArgumentError, error.message
+    rescue OptionParser::ParseError => error
+      raise ParseError.new(error)
     end
 
     def validate!(values)

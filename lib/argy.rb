@@ -5,7 +5,15 @@ module Argy
   Error = Class.new(StandardError)
   CoersionError = Class.new(Error)
   ValidationError = Class.new(Error)
-  MissingArgumentError = Class.new(Error)
+
+  class ParseError < Error
+    attr_reader :original
+
+    def initialize(original)
+      @original = original
+      super(original.message)
+    end
+  end
 
   def self.new(&block)
     Argy::Parser.new(&block)

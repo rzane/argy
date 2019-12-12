@@ -92,7 +92,7 @@ RSpec.describe Argy do
   it "raises a custom error when an argument is missing" do
     parser.option :value, type: :integer
     expect { parser.parse(["--value"]) }.to raise_error(
-      Argy::MissingArgumentError,
+      Argy::ParseError,
       "missing argument: --value"
     )
   end
