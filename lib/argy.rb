@@ -15,11 +15,11 @@ module Argy
     end
   end
 
-  def self.new(**opts, &block)
-    Argy::Parser.new(opts, &block)
+  def self.new(&block)
+    Argy::Parser.new(&block)
   end
 
-  def self.parse(argv: ARGV, **opts, &block)
-    new(opts, &block).parse(argv)
+  def self.parse(argv: ARGV, &block)
+    new(&block).parse(argv)
   end
 end

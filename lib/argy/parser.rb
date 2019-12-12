@@ -8,8 +8,7 @@ module Argy
   class Parser
     attr_reader :examples, :arguments, :options, :flags
 
-    def initialize(help: true)
-      @help = help
+    def initialize
       @usage = $0
       @description = nil
       @arguments = []
@@ -17,10 +16,6 @@ module Argy
       @flags = []
       @examples = []
       yield self if block_given?
-    end
-
-    def help?
-      @help
     end
 
     def usage(usage = nil)
@@ -113,13 +108,6 @@ module Argy
 
         flags.each do |flag, action|
           o.on(*flag, &action)
-        end
-
-        if help?
-          o.on("-h", "--help") do
-            puts help
-            exit
-          end
         end
       end
     end

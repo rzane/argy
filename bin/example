@@ -12,6 +12,13 @@ parser = Argy.new do |o|
   o.option :times, type: :integer, desc: "number of times to print", default: 1
   o.on "-v", "print the verison and exit" do
     puts Argy::VERSION
+    exit
+  end
+  o.on "-h", "--help", "show this help and exit" do
+    puts o.help
+    puts o.help.section "SECTION"
+    puts o.help.entry "foo", desc: "bar"
+    exit
   end
 end
 

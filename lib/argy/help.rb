@@ -19,6 +19,18 @@ module Argy
       out.join("\n") + "\n"
     end
 
+    def section(title)
+      bold "\n#{title}"
+    end
+
+    def entry(name, desc: nil, required: false, default: nil)
+      out = "  #{name.ljust(column)}"
+      out += dim("#{desc} ") if desc
+      out += dim("(required) ") if required
+      out += dim("[default: #{default.inspect}]") if default
+      out.rstrip
+    end
+
     private
 
     def description(out)
@@ -41,7 +53,7 @@ module Argy
     end
 
     def argument(a)
-      parameter(a.label, a.desc, a.required?, a.default)
+      entry(a.label, desc: a.desc, required: a.required?, default: a.default)
     end
 
     def options(out)
@@ -52,32 +64,23 @@ module Argy
     def option(o)
       label = [option_label(o.label, o.type)]
       label += o.aliases.map { |a| option_label(a, o.type) }
-      parameter(label.join(", "), o.desc, o.required?, o.default)
+      entry(label.join(", "), desc: o.desc, required: o.required?, default: o.default)
     end
 
     def flags(out)
-      out << bold("\nFLAGS")
+      out << bold("\nFLAGS") if parser.flags.any?
       out.concat parser.flags.map { |f, _| flag(f) }
-      out << parameter("--help, -h", "show this help and exit")
     end
 
     def flag(flag)
       flag = flag.dup
       desc = flag.pop unless flag.last.match?(/^-/)
-      parameter(flag.reverse.join(", "), desc)
+      entry(flag.reverse.join(", "), desc: desc)
     end
 
     def option_label(label, type)
       return label if type == :boolean
       label.start_with?("--") ? "#{label}=VALUE" : "#{label} VALUE"
-    end
-
-    def parameter(left, right, required = false, default = nil)
-      label = "  #{left.ljust(column)}"
-      label += dim("#{right} ") if right
-      label += dim("(required) ") if required
-      label += dim("[default: #{default.inspect}]") if default
-      label.rstrip
     end
 
     def bold(text)
