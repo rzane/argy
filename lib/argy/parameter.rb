@@ -1,3 +1,4 @@
+require "pathname"
 require "argy/parameter"
 
 module Argy
