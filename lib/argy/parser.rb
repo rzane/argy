@@ -58,7 +58,7 @@ module Argy
     end
 
     def default_values
-      parameters.reduce(args: []) do |acc, opt|
+      parameters.reduce(unused_args: []) do |acc, opt|
         acc[opt.name] = opt.default
         acc
       end
@@ -96,7 +96,7 @@ module Argy
     def populate_arguments(values, argv)
       argv.zip(arguments).each do |value, arg|
         if arg.nil?
-          values[:args] << value
+          values[:unused_args] << value
         else
           values[arg.name] = arg.coerce(value)
         end

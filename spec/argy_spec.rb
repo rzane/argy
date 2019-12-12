@@ -78,7 +78,7 @@ RSpec.describe Argy do
     parser.option :output
     parser.argument :name
     options = parser.parse %w(foo --output src unused)
-    expect(options.to_h).to eq(name: "foo", output: "src", args: ["unused"])
+    expect(options.to_h).to eq(name: "foo", output: "src", unused_args: ["unused"])
   end
 
   it "raises a custom error when coersion fails" do
@@ -126,6 +126,6 @@ RSpec.describe Argy do
   end
 
   def have_values(**values)
-    eq(args: [], **values)
+    eq(unused_args: [], **values)
   end
 end
