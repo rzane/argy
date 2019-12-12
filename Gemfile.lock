@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    argy (0.2.0)
+    argy (0.2.1)
 
 GEM
   remote: https://rubygems.org/

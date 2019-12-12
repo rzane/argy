@@ -104,6 +104,7 @@ RSpec.describe Argy do
     parser.option :fizz, required: true, desc: "blah"
     parser.option :foo_bar, aliases: ["-f"]
     parser.on("-v", "show the version and exit") {}
+    parser.on("-h", "--help", "show this help and exit") {}
 
     expect(parser.help(color: false).to_s).to eq(<<~EOS)
       USAGE
