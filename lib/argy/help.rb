@@ -1,11 +1,18 @@
 module Argy
+  # Builds help information
   class Help
+    # Create a new Help
+    # @param parser [Parser] the parser to generate help for
+    # @param column [Integer] the column width of the help
+    # @param color [TrueClass,FalseClass] whether or not to print with color
     def initialize(parser, column: 30, color: $stdout.tty?)
       @parser = parser
       @column = column
       @color = color
     end
 
+    # The help information
+    # @return [String]
     def to_s
       out = []
 
@@ -19,10 +26,18 @@ module Argy
       out.join("\n") + "\n"
     end
 
+    # Format the title of a custom section
+    # @return [String]
     def section(title)
       bold "\n#{title}"
     end
 
+    # Format an entry of a section
+    # @param name [String] left column of the entry
+    # @param desc [String] right column of the entry
+    # @param required [TrueClass,FalseClass] whether or not the entry is required
+    # @param default [Object] default value for the entry
+    # @return [String]
     def entry(name, desc: nil, required: false, default: nil)
       out = "  #{name.ljust(column)}"
       out += dim("#{desc} ") if desc

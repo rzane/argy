@@ -1,0 +1,6 @@
+--output-dir=doc/api
+--embed-mixins
+--protected
+--no-private
+--markup-provider=redcarpet
+--markup=markdown

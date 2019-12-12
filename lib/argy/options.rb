@@ -1,17 +1,32 @@
 module Argy
+  # The resulting options that were parsed from the command line.
+  # @example Getting a value
+  #   options = Options.new(foo: "bar")
+  #   options.foo #=> "bar"
+  # @example Querying for a value's truthiness
+  #   options = Options.new(foo: "bar")
+  #   options.foo? #=> true
   class Options
+    # Create a new Options
+    # @param values [Hash{Symbol => Object}]
     def initialize(values)
       @values = values
     end
 
+    # The values as a hash
+    # @return [Hash{Symbol => Object}]
     def to_h
       @values
     end
 
+    # Get a value by key
+    # @see Hash#[]
     def [](key)
       @values[key]
     end
 
+    # Fetch a value by key or provide a default.
+    # @see Hash#fetch
     def fetch(*args, &block)
       @values.fetch(*args, &block)
     end
