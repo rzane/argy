@@ -59,12 +59,19 @@ module Argy
       end
     end
 
-    def parse(argv)
+    def parse(argv, strategy: nil)
       argv = argv.dup
       values = default_values
-
       parser = build_parser(values)
-      parser.parse!(argv)
+
+      case strategy
+      when :order
+        parser.order!(argv)
+      when :permute
+        parser.permute!(argv)
+      else
+        parser.parse!(argv)
+      end
 
       populate_arguments(values, argv)
       Options.new validate!(values)
