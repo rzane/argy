@@ -53,7 +53,7 @@ module Argy
     end
 
     def default_values
-      (arguments + options).reduce(args: []) do |acc, opt|
+      parameters.reduce(args: []) do |acc, opt|
         acc[opt.name] = opt.default
         acc
       end
@@ -67,9 +67,7 @@ module Argy
       parser.parse!(argv)
 
       populate_arguments(values, argv)
-      validate!(values)
-
-      Options.new(values)
+      Options.new validate!(values)
     rescue OptionParser::MissingArgument => error
       raise MissingArgumentError, error.message
     end
@@ -78,7 +76,7 @@ module Argy
       parameters.each do |param|
         param.validate(values[param.name])
       end
-      nil
+      values
     end
 
     private
