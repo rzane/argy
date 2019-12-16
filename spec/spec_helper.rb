@@ -1,4 +1,5 @@
 require "bundler/setup"
+require_relative "support/coverage"
 require "argy"
 
 RSpec.configure do |config|

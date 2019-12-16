@@ -1,4 +1,4 @@
-# Argy [![Build Status](https://travis-ci.org/rzane/argy.svg?branch=master)](https://travis-ci.org/rzane/argy)
+# Argy [![Build Status](https://travis-ci.org/rzane/argy.svg?branch=master)](https://travis-ci.org/rzane/argy) [![Coverage Status](https://coveralls.io/repos/github/rzane/argy/badge.svg?branch=master)](https://coveralls.io/github/rzane/argy?branch=master)
 
 Yet another command-line option parser.
 
