@@ -24,7 +24,7 @@ jobs:
         run: bundle exec rspec
 
       - name: Set version
-        run: perl -pi -e "s/0\.0\.0/${GITHUB_REF:11}/" lib/graphql/extras/version.rb
+        run: perl -pi -e "s/0\.0\.0/${GITHUB_REF:11}/" lib/argy/version.rb
 
       - name: Publish
         run: |
