@@ -75,8 +75,8 @@ module Argy
     #   Argy.new do |o|
     #     o.argument :input
     #   end
-    def argument(*args)
-      @arguments << Argument.new(*args)
+    def argument(*args, **opts)
+      @arguments << Argument.new(*args, **opts)
     end
 
     # Adds an option
@@ -85,8 +85,8 @@ module Argy
     #   Argy.new do |o|
     #     o.option :verbose, type: :boolean
     #   end
-    def option(*args)
-      @options << Option.new(*args)
+    def option(*args, **opts)
+      @options << Option.new(*args, **opts)
     end
 
     # Adds a flag
