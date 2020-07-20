@@ -4,7 +4,6 @@
 
 ![Build](https://github.com/rzane/argy/workflows/Build/badge.svg)
 ![Version](https://img.shields.io/gem/v/argy)
-[![Coverage Status](https://coveralls.io/repos/github/rzane/argy/badge.svg?branch=master)](https://coveralls.io/github/rzane/argy?branch=master)
 
 </div>
 
